@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <a shiro:hasRole="role1" href="addUser">增加用户</a>
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="user,var: ${pageInfo.list}">
+            <td th:text="${var.count}"></td>
+            <td th:text="${user.uname}"></td>
+            <td th:text="${user.upwd}"></td>
+            <td></td>
+        </tr>
+    </table>
+    <a th:href="@{index(pageNum=1)}" th:text="首页"></a>
+    <span th:if="${!pageInfo.hasPreviousPage}">上一页</span>
+    <a th:if="${pageInfo.hasPreviousPage}" th:href="@{index(pageNum=${pageInfo.prePage})}" th:text="上一页"></a>
+    <!--显示所有页码，navigatepageNums表示所有页码的数组集合-->
+    <span th:each="i: ${pageInfo.navigatepageNums}">
+        <a th:href="@{index(pageNum=${i})}" th:text="${i}"></a>
+    </span>
+    <a th:if="${pageInfo.hasNextPage}" th:href="@{index(pageNum=${pageInfo.nextPage})}" th:text="下一页"></a>
+    <span th:if="${!pageInfo.hasNextPage}">下一页</span>
+    <a th:href="@{index(pageNum=${pageInfo.lastPage})}" th:text="尾页"></a>
+</body>
+</html>
